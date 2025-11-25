@@ -1,6 +1,8 @@
 package com.exemple.api.movel.apirestmobile.controller;
 
+import com.exemple.api.movel.apirestmobile.entity.Diretor;
 import com.exemple.api.movel.apirestmobile.entity.Filme;
+import com.exemple.api.movel.apirestmobile.service.DiretorService;
 import com.exemple.api.movel.apirestmobile.service.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +17,22 @@ public class FilmeController {
 
     @Autowired
     private FilmeService filmeService;
+
     @Autowired
-    private HandlerMapping resourceHandlerMapping;
+    private DiretorService diretorService;
 
     @PostMapping("/criarFilme")
     public ResponseEntity<?> criarFilme(@RequestBody Filme filme) {
         if (filme.getTitulo() == null || filme.getTitulo().isBlank()) {
             return ResponseEntity.badRequest().body("O título do filme é obrigatório.");
+        }
+        if (filme.getDiretor() != null && filme.getDiretor().getId() != null) {
+
+            Diretor diretor = diretorService.findById(filme.getDiretor().getId());
+            if (diretor == null) {
+                return ResponseEntity.badRequest().body("Diretor inválido.");
+            }
+            filme.setDiretor(diretor);
         }
 
         Filme createdFilm = filmeService.save(filme);
