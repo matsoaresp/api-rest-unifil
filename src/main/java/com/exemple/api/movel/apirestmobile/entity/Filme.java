@@ -20,4 +20,7 @@ public class Filme {
     private String genero;
     private String anoLancamento;
 
+    @ManyToOne
+    @JoinColumn(name = "diretor_id")
+    private Diretor diretor;
 }
