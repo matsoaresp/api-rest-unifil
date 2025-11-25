@@ -84,8 +84,6 @@ Atributos:
     "id": 1
   }
 }
-
-# 
 ```
 ## Validações e Regras Implementadas
 
