@@ -28,4 +28,9 @@ public class FilmeService {
     public void delete(Long id) {
         filmeRepository.deleteById(id);
     }
+
+
+    public boolean existsByDiretorId(Long diretorId) {
+        return filmeRepository.existsByDiretorId(diretorId);
+    }
 }
